@@ -31,10 +31,11 @@ NIH_Assignment/
 
 ## Run with Docker
 
-Open a PowerShell terminal and change to the project root:
+Open a PowerShell terminal, clone the repo and open the project root:
 
 ```powershell
-cd C:\personal-project\NIH_Assignment
+git clone https://github.com/abdurrehmanlakdawala3-spec/NIH_Assignment.git
+cd NIH_Assignment
 ```
 
 Build the images (only needed after changes or first run):
