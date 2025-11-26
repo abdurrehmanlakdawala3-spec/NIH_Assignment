@@ -7,7 +7,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
-  private readonly baseUrl = 'http://localhost:8080/api/v1';
+  // private readonly baseUrl = 'http://localhost:8080/api/v1';
+  private readonly baseUrl = '/api/v1';
 
   constructor(private snackBar: MatSnackBar) {
       console.log('ApiInterceptor instantiated');
