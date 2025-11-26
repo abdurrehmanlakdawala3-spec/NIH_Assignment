@@ -3,7 +3,7 @@
 1. Clone the repo and open the project root:
 
 ```powershell
-git clone <your-repo-url>
+git clone https://github.com/abdurrehmanlakdawala3-spec/NIH_Assignment.git
 cd NIH_Assignment
 ```
 ---
