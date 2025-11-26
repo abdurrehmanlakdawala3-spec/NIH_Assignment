@@ -23,21 +23,7 @@ cd NIH_Assignment
 cd NIH_Assignment_BE
 ```
 
-2. Configure the database (example `application.yml` / `application.properties`): **Optional** (this project have embedded H2 database)
-
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/student_db
-    username: postgres
-    password: postgres
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-```
-
-3. Run the application
+2. Run the application
 
 - From your IDE: run the main class `NIHAssignmentApplication`.
 - From terminal (project root):
@@ -133,7 +119,7 @@ This runs tests, Checkstyle, PMD, and coverage checks.
 
 ## Recommended order to start
 
-1. Start your database (PostgreSQL) ** Optional**
+1. Start your database and configure in application.yml(PostgreSQL) **Optional**
 2. Start backend: `./gradlew bootRun` (from `NIH_Assignment_BE`)
 3. Start frontend: `ng serve` (from `NIH_Assignment_UI`)
 4. Open the UI at `http://localhost:4200`
