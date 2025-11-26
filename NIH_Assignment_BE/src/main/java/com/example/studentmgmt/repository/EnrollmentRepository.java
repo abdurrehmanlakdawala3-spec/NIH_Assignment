@@ -24,4 +24,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     )
     Page<Enrollment> searchEnrollments(@Param("search") String search, Pageable pageable);
 
+    Page<Enrollment> findByStudent_Id(Long studentId, Pageable pageable);
+
 }

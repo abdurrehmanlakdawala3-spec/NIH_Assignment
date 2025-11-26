@@ -10,12 +10,18 @@ export class EnrollmentService {
   private enrollmentsSubject = new BehaviorSubject<EnrollmentView[]>([]);
   enrollments$ = this.enrollmentsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getEnrollments(page = 0, size = 20, searchText?: string): Observable<Page<EnrollmentView>> {
     let query = `?page=${page}&size=${size}`;
     if (searchText) query += `&searchText=${searchText}`;
     return this.http.get<any>(`${this.enrollmentBaseUrl}${query}`)
+      .pipe(tap(res => this.enrollmentsSubject.next(res.content)));
+  }
+
+  getMyEnrollments(page = 0, size = 20): Observable<Page<EnrollmentView>> {
+    const query = `?page=${page}&size=${size}`;
+    return this.http.get<Page<EnrollmentView>>(`${this.enrollmentBaseUrl}/my${query}`)
       .pipe(tap(res => this.enrollmentsSubject.next(res.content)));
   }
 

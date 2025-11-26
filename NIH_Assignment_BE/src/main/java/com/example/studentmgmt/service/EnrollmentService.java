@@ -13,4 +13,6 @@ public interface EnrollmentService {
     void deleteEnrollment(Long id);
 
     Page<EnrollmentViewResponse> listEnrollments(Pageable pageable, String searchString);
+
+    Page<EnrollmentViewResponse> myEnrollments(Pageable pageable, Long studentId);
 }

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Page<Student> findByLastNameIgnoreCaseStartingWith(String prefix, Pageable pageable);
 
@@ -17,4 +19,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Page<Student> findByLastNameOrFirstNameOrEmailIgnoreCase(@Param("searchTerm") String searchTerm, Pageable pageable);
 
     boolean existsByEmail(String email);
+
+    Optional<Student> findByEmail(String email);
 }

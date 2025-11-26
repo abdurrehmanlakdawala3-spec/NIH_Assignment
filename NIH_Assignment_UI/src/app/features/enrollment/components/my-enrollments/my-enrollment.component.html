@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-title>My Enrollments</mat-card-title>
+    <table mat-table [dataSource]="enrollments" class="mat-elevation-z2" *ngIf="enrollments.length">
+
+        <ng-container matColumnDef="courseCode">
+            <th mat-header-cell *matHeaderCellDef>Code</th>
+            <td mat-cell *matCellDef="let element">{{ element.courseCode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="courseTitle">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let element">{{ element.courseTitle }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div *ngIf="enrollments.length === 0" class="no-data">
+        You are not enrolled in any courses yet.
+    </div>
+</mat-card>

@@ -5,11 +5,13 @@ import com.example.studentmgmt.entity.Student;
 import com.example.studentmgmt.exception.ConflictException;
 import com.example.studentmgmt.repository.EnrollmentRepository;
 import com.example.studentmgmt.repository.StudentRepository;
+import com.example.studentmgmt.repository.UserRepository;
 import com.example.studentmgmt.service.impl.StudentServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
@@ -23,12 +25,18 @@ public class StudentServiceTest {
     @Mock
     private EnrollmentRepository enrollmentRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private PasswordEncoder encoder;
+
     private StudentService studentService;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        studentService = new StudentServiceImpl(studentRepository, enrollmentRepository);
+        studentService = new StudentServiceImpl(studentRepository, enrollmentRepository, userRepository, encoder);
     }
 
     @Test

@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AuthService } from './core/auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -31,9 +32,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     <mat-toolbar color="primary">
       <span>Student Management</span>
       <span class="spacer"></span>
-      <button mat-button routerLink="/students">Students</button>
-      <button mat-button routerLink="/courses">Courses</button>
-      <button mat-button routerLink="/enrollments">Enrollments</button>
+      <button *ngIf="authService.isAdmin()" mat-button routerLink="/students">Students</button>
+      <button *ngIf="authService.isAdmin()" mat-button routerLink="/courses">Courses</button>
+      <button *ngIf="authService.isAdmin()" mat-button routerLink="/enrollments">Enrollments</button>
+      <button *ngIf="authService.isStudent()" mat-button routerLink="/enrollments/my">My Enrollments</button>
+
+      <button *ngIf="authService.isLoggedIn()" mat-button (click)="authService.logout()">Logout</button>
+      <button *ngIf="!authService.isLoggedIn()" mat-button routerLink="/login">Login</button>
     </mat-toolbar>
     <router-outlet></router-outlet>
   `,
@@ -41,4 +46,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     .spacer { flex: 1 1 auto; }
   `]
 })
-export class App {}
+export class App {
+    constructor(public authService: AuthService) {}
+
+}

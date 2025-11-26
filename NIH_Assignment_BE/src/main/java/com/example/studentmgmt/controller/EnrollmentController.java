@@ -2,6 +2,7 @@ package com.example.studentmgmt.controller;
 
 import com.example.studentmgmt.dto.request.EnrollmentCreateRequest;
 import com.example.studentmgmt.dto.response.EnrollmentViewResponse;
+import com.example.studentmgmt.security.CustomUserDetails;
 import com.example.studentmgmt.service.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +51,21 @@ public class EnrollmentController {
     public ResponseEntity<Void> deleteEnrollment(@PathVariable Long id) {
         enrollmentService.deleteEnrollment(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<Page<EnrollmentViewResponse>> myEnrollments(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            Authentication authentication) {
+
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        Long studentId = user.getStudentId();
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<EnrollmentViewResponse> pageResp =
+                enrollmentService.myEnrollments(pageable, studentId);
+        return ResponseEntity.ok(pageResp);
     }
 
 }

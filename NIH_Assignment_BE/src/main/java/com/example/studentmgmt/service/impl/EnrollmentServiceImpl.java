@@ -79,4 +79,10 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         Page<Enrollment> page = enrollmentRepository.searchEnrollments(searchString, pageable);
         return page.map(MapperUtils::toEnrollmentViewResponse);
     }
+
+    @Override
+    public Page<EnrollmentViewResponse> myEnrollments(Pageable pageable, Long studentId) {
+        Page<Enrollment> page = enrollmentRepository.findByStudent_Id(studentId, pageable);
+        return page.map(MapperUtils::toEnrollmentViewResponse);
+    }
 }
