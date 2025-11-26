@@ -30,7 +30,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatIconModule,
     RouterModule,
         PaginationComponent,
-        // SearchBarComponent,
+        SearchBarComponent,
   ],
   templateUrl: './enrollment-list.component.html',
   styleUrls: ['./enrollment-list.component.scss']
@@ -42,9 +42,7 @@ export class EnrollmentListComponent implements OnInit {
   pageIndex = 0;
   pageSize = 5;
   totalElements = 0;
-
-  searchStudent: string = '';
-  searchCourse: string = '';
+  searchText = '';
 
   constructor(
     private service: EnrollmentService,
@@ -62,10 +60,7 @@ export class EnrollmentListComponent implements OnInit {
   }
 
   loadData() {
-    const studentId = this.searchStudent ? Number(this.searchStudent) : undefined;
-    const courseId = this.searchCourse ? Number(this.searchCourse) : undefined;
-
-    this.service.getEnrollments(this.pageIndex, this.pageSize, studentId, courseId)
+    this.service.getEnrollments(this.pageIndex, this.pageSize, this.searchText)
       .subscribe(res => {
         this.totalElements = res.totalElements;
         this.pageIndex = 0;
@@ -79,14 +74,9 @@ export class EnrollmentListComponent implements OnInit {
     this.loadData();
   }
 
-  search() {
-    this.pageIndex = 0;
-    this.loadData();
-  }
-
-  clearSearch() {
-    this.searchStudent = '';
-    this.searchCourse = '';
+  onSearch(value: string) {
+    console.log(value + "123123123123123")
+    this.searchText = value.trim();
     this.loadData();
   }
 

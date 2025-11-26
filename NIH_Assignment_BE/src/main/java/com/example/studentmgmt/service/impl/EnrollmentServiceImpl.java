@@ -2,15 +2,19 @@ package com.example.studentmgmt.service.impl;
 
 import com.example.studentmgmt.dto.request.EnrollmentCreateRequest;
 import com.example.studentmgmt.dto.response.EnrollmentViewResponse;
-import com.example.studentmgmt.entity.*;
-import com.example.studentmgmt.exception.BadRequestException;
+import com.example.studentmgmt.entity.Course;
+import com.example.studentmgmt.entity.Enrollment;
+import com.example.studentmgmt.entity.Student;
 import com.example.studentmgmt.exception.ConflictException;
 import com.example.studentmgmt.exception.NotFoundException;
-import com.example.studentmgmt.repository.*;
+import com.example.studentmgmt.repository.CourseRepository;
+import com.example.studentmgmt.repository.EnrollmentRepository;
+import com.example.studentmgmt.repository.StudentRepository;
 import com.example.studentmgmt.service.EnrollmentService;
 import com.example.studentmgmt.util.MapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,10 +54,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .build();
         Enrollment saved = enrollmentRepository.save(enrollment);
 
-        // populate nested fields for mapping (ensure loaded)
-        saved.setStudent(student);
-        saved.setCourse(course);
-
         return MapperUtils.toEnrollmentViewResponse(saved);
     }
 
@@ -62,9 +62,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public EnrollmentViewResponse getEnrollment(Long id) {
         Enrollment e = enrollmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Enrollment not found with id=" + id));
-        // ensure fetch
-//        e.getStudent().getFirstName();
-//        e.getCourse().getCourseCode();
         return MapperUtils.toEnrollmentViewResponse(e);
     }
 
@@ -78,14 +75,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<EnrollmentViewResponse> listEnrollments(Pageable pageable, Long studentId, Long courseId) {
-        Page<Enrollment> page;
-
-        if (studentId != null) {
-            page = enrollmentRepository.findByStudentId(studentId, pageable);
-        } else {
-            page = enrollmentRepository.findAll(pageable);
-        }
+    public Page<EnrollmentViewResponse> listEnrollments(Pageable pageable, String searchString) {
+        Page<Enrollment> page = enrollmentRepository.searchEnrollments(searchString, pageable);
         return page.map(MapperUtils::toEnrollmentViewResponse);
     }
 }

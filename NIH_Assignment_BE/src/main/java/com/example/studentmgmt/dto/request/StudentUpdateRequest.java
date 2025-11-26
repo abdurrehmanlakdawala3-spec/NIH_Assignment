@@ -12,14 +12,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class StudentUpdateRequest {
-    @Size(max=100)
+    @Size(max = 100)
     private String firstName;
 
-    @Size(max=100)
+    @Size(max = 100)
     private String lastName;
 
     @Email
-    @Size(max=255)
+    @Size(max = 255)
     private String email;
 
     private LocalDate dateOfBirth;

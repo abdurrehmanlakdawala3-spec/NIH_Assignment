@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { EnrollmentCreateRequest, EnrollmentView } from '../models/enrollment.model';
+import { Page } from 'src/app/core/models/page.model';
 
 @Injectable({ providedIn: 'root' })
 export class EnrollmentService {
@@ -11,10 +12,9 @@ export class EnrollmentService {
 
   constructor(private http: HttpClient) {}
 
-  getEnrollments(page = 0, size = 20, studentId?: number, courseId?: number): Observable<any> {
+  getEnrollments(page = 0, size = 20, searchText?: string): Observable<Page<EnrollmentView>> {
     let query = `?page=${page}&size=${size}`;
-    if (studentId) query += `&studentId=${studentId}`;
-    if (courseId) query += `&courseId=${courseId}`;
+    if (searchText) query += `&searchText=${searchText}`;
     return this.http.get<any>(`${this.enrollmentBaseUrl}${query}`)
       .pipe(tap(res => this.enrollmentsSubject.next(res.content)));
   }

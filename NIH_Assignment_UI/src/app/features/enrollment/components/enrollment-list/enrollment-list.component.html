@@ -2,28 +2,16 @@
 
     <h2>Enrollments</h2>
 
-    <div class="toolbar-row">
+        <div class="toolbar-row">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
 
-  <div class="search-fields">
-    <mat-form-field>
-      <input matInput placeholder="Student ID" [(ngModel)]="searchStudent">
-    </mat-form-field>
-
-    <!-- <mat-form-field>
-      <input matInput placeholder="Course ID" [(ngModel)]="searchCourse">
-    </mat-form-field> -->
-
-    <button mat-raised-button color="primary" (click)="search()">Search</button>
-    <button mat-button (click)="clearSearch()">Clear</button>
-  </div>
-<div>
-
-          <button mat-raised-button color="primary" (click)="addEnrollment()">
+        <button mat-raised-button color="primary" (click)="addEnrollment()">
             <mat-icon>add</mat-icon>
             Add Enrollment
         </button>
-</div>
-</div>
+
+    </div>
+
   <table mat-table [dataSource]="enrollments" class="mat-elevation-z8">
 
     <ng-container matColumnDef="studentFullName">

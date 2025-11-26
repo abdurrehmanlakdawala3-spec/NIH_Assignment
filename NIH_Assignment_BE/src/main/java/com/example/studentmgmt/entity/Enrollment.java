@@ -21,17 +21,17 @@ public class Enrollment {
 
     // associations
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="student_id", nullable=false)
+    @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="course_id", nullable=false)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @Column(name="created_at", nullable=false)
+    @Column(name = "created_at", nullable = false)
     @Builder.Default
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 }

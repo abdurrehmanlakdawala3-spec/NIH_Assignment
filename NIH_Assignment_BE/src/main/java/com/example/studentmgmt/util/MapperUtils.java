@@ -9,7 +9,8 @@ import com.example.studentmgmt.entity.Student;
 
 public final class MapperUtils {
 
-    private MapperUtils() {}
+    private MapperUtils() {
+    }
 
     public static StudentResponse toStudentResponse(Student s) {
         if (s == null) return null;

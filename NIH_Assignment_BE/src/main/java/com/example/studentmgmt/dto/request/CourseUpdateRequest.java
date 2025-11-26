@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CourseUpdateRequest {
-    @Size(max=255)
+    @Size(max = 255)
     private String title;
 
     private String description;

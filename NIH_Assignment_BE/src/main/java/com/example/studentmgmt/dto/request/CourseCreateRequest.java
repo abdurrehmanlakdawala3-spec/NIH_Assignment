@@ -18,7 +18,7 @@ public class CourseCreateRequest {
     private String courseCode;
 
     @NotBlank
-    @Size(max=255)
+    @Size(max = 255)
     private String title;
 
     private String description;

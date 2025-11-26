@@ -14,16 +14,16 @@ import java.time.LocalDate;
 @Builder
 public class StudentCreateRequest {
     @NotBlank
-    @Size(max=100)
+    @Size(max = 100)
     private String firstName;
 
     @NotBlank
-    @Size(max=100)
+    @Size(max = 100)
     private String lastName;
 
     @NotBlank
     @Email
-    @Size(max=255)
+    @Size(max = 255)
     private String email;
 
     private LocalDate dateOfBirth;

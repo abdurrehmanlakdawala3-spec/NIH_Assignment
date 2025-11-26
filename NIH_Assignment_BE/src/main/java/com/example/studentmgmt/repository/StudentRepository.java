@@ -10,7 +10,10 @@ import org.springframework.data.repository.query.Param;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Page<Student> findByLastNameIgnoreCaseStartingWith(String prefix, Pageable pageable);
 
-    @Query("SELECT s FROM Student s WHERE LOWER(s.lastName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR LOWER(s.firstName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR LOWER(s.email) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    @Query("SELECT s FROM Student s " +
+            "WHERE LOWER(s.lastName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +
+            "OR LOWER(s.firstName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +
+            "OR LOWER(s.email) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     Page<Student> findByLastNameOrFirstNameOrEmailIgnoreCase(@Param("searchTerm") String searchTerm, Pageable pageable);
 
     boolean existsByEmail(String email);

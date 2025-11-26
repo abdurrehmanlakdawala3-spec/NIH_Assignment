@@ -5,8 +5,12 @@ import com.example.studentmgmt.dto.request.StudentUpdateRequest;
 import com.example.studentmgmt.dto.response.StudentResponse;
 import com.example.studentmgmt.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
-import org.springframework.http.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     private final StudentService studentService;
-    private static final int DEFAULT_PAGE = 0;
-    private static final int DEFAULT_SIZE = 20;
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -56,7 +58,8 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentResponse> updateStudent(@PathVariable Long id, @Validated @RequestBody StudentUpdateRequest request) {
+    public ResponseEntity<StudentResponse> updateStudent(@PathVariable Long id,
+                                                         @Validated @RequestBody StudentUpdateRequest request) {
         StudentResponse response = studentService.updateStudent(id, request);
         return ResponseEntity.ok(response);
     }
@@ -69,8 +72,8 @@ public class StudentController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<StudentResponse>> search(@RequestParam String searchString,
-                                                                  @RequestParam(defaultValue = "0") int page,
-                                                                  @RequestParam(defaultValue = "20") int size) {
+                                                        @RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<StudentResponse> result = studentService.search(searchString, pageable);
         return ResponseEntity.ok(result);

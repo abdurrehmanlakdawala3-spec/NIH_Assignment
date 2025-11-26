@@ -17,10 +17,6 @@ public class CourseCodeFormatValidator implements ConstraintValidator<CourseCode
             return false;
         }
 
-        if (!PATTERN.matcher(value).matches()) {
-            return false;
-        }
-
-        return true;
+        return PATTERN.matcher(value).matches();
     }
 }

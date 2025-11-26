@@ -19,7 +19,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="course_code", nullable = false, unique = true, length = 50)
+    @Column(name = "course_code", nullable = false, unique = true, length = 50)
     private String courseCode;
 
     @Column(nullable = false, length = 255)
@@ -28,11 +28,11 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name="created_at", nullable=false)
+    @Column(name = "created_at", nullable = false)
     @Builder.Default
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -4,8 +4,11 @@ import com.example.studentmgmt.dto.request.EnrollmentCreateRequest;
 import com.example.studentmgmt.dto.response.EnrollmentViewResponse;
 import com.example.studentmgmt.service.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
-import org.springframework.http.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +27,9 @@ public class EnrollmentController {
     public ResponseEntity<Page<EnrollmentViewResponse>> listEnrollments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
-            @RequestParam(required = false) Long studentId,
-            @RequestParam(required = false) Long courseId) {
+            @RequestParam(required = false, defaultValue = "") String searchText) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<EnrollmentViewResponse> pageResp = enrollmentService.listEnrollments(pageable, studentId, courseId);
+        Page<EnrollmentViewResponse> pageResp = enrollmentService.listEnrollments(pageable, searchText);
         return ResponseEntity.ok(pageResp);
     }
 
@@ -37,7 +39,8 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public ResponseEntity<EnrollmentViewResponse> createEnrollment(@Validated @RequestBody EnrollmentCreateRequest request) {
+    public ResponseEntity<EnrollmentViewResponse> createEnrollment(
+            @Validated @RequestBody EnrollmentCreateRequest request) {
         EnrollmentViewResponse resp = enrollmentService.createEnrollment(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
