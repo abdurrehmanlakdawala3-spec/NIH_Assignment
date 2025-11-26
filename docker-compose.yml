@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./NIH_Assignment_BE
+      dockerfile: Dockerfile
+    container_name: student-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  frontend:
+    build:
+      context: ./NIH_Assignment_UI
+      dockerfile: Dockerfile
+    container_name: student-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
