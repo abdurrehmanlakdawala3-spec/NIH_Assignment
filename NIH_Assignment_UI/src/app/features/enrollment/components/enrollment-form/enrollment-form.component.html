@@ -1,0 +1,67 @@
+<div class="enrollment-container">
+  <h2>Add Enrollment</h2>
+
+  <form [formGroup]="enrollmentForm" (ngSubmit)="onSubmit()" class="enrollment-form">
+
+    <!-- STUDENT SEARCH -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Student</mat-label>
+      <input type="text" matInput placeholder="Search student..." formControlName="studentSearch"
+             [matAutocomplete]="studentAuto">
+      <mat-autocomplete #studentAuto="matAutocomplete" [displayWith]="displayStudent"
+                        (optionSelected)="onStudentSelected($event.option.value)">
+        <mat-option *ngFor="let student of filteredStudents$ | async" [value]="student">
+          {{ student.firstName }} {{ student.lastName }} ({{ student.email }})
+        </mat-option>
+      </mat-autocomplete>
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <!-- STUDENT DETAILS -->
+    <mat-card *ngIf="selectedStudent" class="details-card">
+      <mat-card-header>
+        <mat-card-title>Selected Student</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Name:</strong> {{ selectedStudent.firstName }} {{ selectedStudent.lastName }}</p>
+        <p><strong>Email:</strong> {{ selectedStudent.email }}</p>
+        <p><strong>DOB:</strong> {{ selectedStudent.dateOfBirth || 'N/A' }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- COURSE SEARCH -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Course</mat-label>
+      <input type="text" matInput placeholder="Search course..." formControlName="courseSearch"
+             [matAutocomplete]="courseAuto">
+      <mat-autocomplete #courseAuto="matAutocomplete" [displayWith]="displayCourse"
+                        (optionSelected)="onCourseSelected($event.option.value)">
+        <mat-option *ngFor="let course of filteredCourses$ | async" [value]="course">
+          {{ course.courseCode }} {{ course.title }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-icon matSuffix>menu_book</mat-icon>
+    </mat-form-field>
+
+    <!-- COURSE DETAILS -->
+    <mat-card *ngIf="selectedCourse" class="details-card">
+      <mat-card-header>
+        <mat-card-title>Selected Course</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Title:</strong> {{ selectedCourse.title }}</p>
+        <p><strong>Code:</strong> {{ selectedCourse.courseCode }}</p>
+        <p><strong>Description:</strong> {{ selectedCourse.description || 'N/A' }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- SUBMIT BUTTON -->
+    <div class="submit-container">
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="!selectedStudent || !selectedCourse">
+        Create Enrollment
+      </button>
+    </div>
+
+  </form>
+</div>

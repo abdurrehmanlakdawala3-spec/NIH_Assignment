@@ -1,0 +1,46 @@
+# ======================
+# Node modules
+# ======================
+node_modules/
+
+# ======================
+# Angular build output
+# ======================
+dist/
+out-tsc/
+tmp/
+temp/
+
+# ======================
+# Environment files (if you keep secrets)
+# ======================
+src/environments/environment*.ts
+
+# ======================
+# IDE / Editor files
+# ======================
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ======================
+# Logs
+# ======================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ======================
+# OS generated files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Angular cache
+# ======================
+.angular/

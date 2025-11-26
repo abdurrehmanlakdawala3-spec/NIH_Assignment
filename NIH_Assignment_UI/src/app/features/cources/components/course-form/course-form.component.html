@@ -1,0 +1,20 @@
+<h2>{{courseId ? 'Edit' : 'Create'}} Course</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <mat-form-field>
+    <input matInput placeholder="Course Name" formControlName="title">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Course Code" formControlName="courseCode">
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Description" formControlName="description"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+    {{courseId ? 'Update' : 'Create'}}
+  </button>
+</form>
